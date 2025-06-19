@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>גרף נרות יפניים</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #fff;
+            font-family: 'Varela Round', sans-serif;
+            direction: rtl;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff3c3c;
+            text-shadow: 0 0 10px #ff3c3c;
+        }
+
+        #chart {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="chart-title">גרף נרות יפניים</h1>
+<div id="chart"></div>
+
+<script>
+    // פונקציה לקבלת פרמטר מה-URL
+    function getSymbolFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('symbol') || 'AAPL'; // ברירת מחדל
+    }
+
+    const symbol = getSymbolFromUrl();
+    document.getElementById('chart-title').innerText = 'גרף נרות יפניים - ' + symbol;
+
+    // נתוני דמו
+    const dates = [];
+    const open = [], high = [], low = [], close = [];
+
+    for (let i = 10; i >= 1; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        dates.push(date.toISOString().split('T')[0]);
+
+        const base = 170 + Math.random() * 10;
+        open.push(base);
+        high.push(base + Math.random() * 3);
+        low.push(base - Math.random() * 3);
+        close.push(base + (Math.random() - 0.5) * 5);
+    }
+
+    const data = [{
+        x: dates,
+        open: open,
+        high: high,
+        low: low,
+        close: close,
+        type: 'candlestick',
+        increasing: { line: { color: 'green' } },
+        decreasing: { line: { color: 'red' } }
+    }];
+
+    Plotly.newPlot('chart', data, {
+        title: 'ניתוח מניה: ' + symbol,
+        xaxis: { title: 'תאריך' },
+        yaxis: { title: 'מחיר ($)' },
+        plot_bgcolor: "#0b0b0b",
+        paper_bgcolor: "#0b0b0b",
+        font: { color: "#ffffff" }
+    });
+</script>
+
+</body>
+</html>
