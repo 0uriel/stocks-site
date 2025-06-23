@@ -194,10 +194,9 @@
   <ul id="news-list"></ul>
 </div>
 
-  <script>
+ <script>
   const NEWS_API_KEY = '1410f491c9814ba583c282f071caae92';
 
-  // 2. פונקציה למשיכת חדשות והצגתן ברשימה
   async function fetchAndDisplayNews() {
     const url = `https://newsapi.org/v2/everything`
               + `?q=finance`
@@ -213,9 +212,9 @@
     }
 
     const ul = document.getElementById('news-list');
-    ul.innerHTML = '';  // ננקה פריטים קודמים
+    ul.innerHTML = '';
 
-    // עבור כל כתבה, ניצור <li><a>
+     <li><a>
     json.articles.forEach(article => {
       const li = document.createElement('li');
       const a  = document.createElement('a');
