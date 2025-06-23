@@ -195,18 +195,14 @@
  <script>
  //
  </script>
-  const NEWS_API_KEY = '1410f491c9814ba583c282f071caae92';
+ const GNEWS_API_KEY = '42b0e407dac3e238741aad9e2fdfcf59';
 
 async function fetchAndDisplayNews() {
-  const url = `https://newsapi.org/v2/everything`
-            + `?q=finance`
-            + `&pageSize=5`
-            + `&sortBy=publishedAt`
-            + `&apiKey=${NEWS_API_KEY}`;
+  const url = `https://gnews.io/api/v4/search?q=finance&lang=he&max=5&apikey=${GNEWS_API_KEY}`;
   const res = await fetch(url);
   const json = await res.json();
 
-  if (json.status !== 'ok') {
+  if (!json.articles) {
     document.getElementById('news-list').innerHTML = '<li>שגיאה בטעינת חדשות</li>';
     return;
   }
@@ -217,18 +213,17 @@ async function fetchAndDisplayNews() {
   json.articles.forEach(article => {
     const li = document.createElement('li');
     const a  = document.createElement('a');
-
-    a.href       = article.url;
-    a.target     = '_blank';
-    a.rel        = 'noopener';
-    a.innerText  = article.title;
-
+    a.href = article.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerText = article.title;
     li.appendChild(a);
     ul.appendChild(li);
   });
 }
-  // 3. קוראים פעם אחת בהטענה
-  fetchAndDisplayNews();
+
+// קריאה ראשונית
+fetchAndDisplayNews();
 
   // (אופציונלי) רענון אוטומטי כל 10 דקות
   // setInterval(fetchAndDisplayNews, 1000 * 60 * 10);
